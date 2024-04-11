@@ -27,6 +27,7 @@ const campgroundRoutes = require('./routes/campgrounds')
 const reviewRoutes = require('./routes/reviews')
 // const dbUrl = process.env.DB_URL;
 const MongoStore = require('connect-mongo');
+const mongoSanitize = require('express-mongo-sanitize');
 
 
 
@@ -102,6 +103,15 @@ app.use((req,res,next) =>{
 app.use('/campgrounds',campgroundRoutes);
 app.use('/campgrounds/:id/reviews',reviewRoutes);
 app.use('/',userRoutes);
+
+app.use(mongoSanitize());
+
+// Or, to replace these prohibited characters with _, use:
+// app.use(
+//   mongoSanitize({
+//     replaceWith: '_',
+//   }),
+// );
 
 
 
